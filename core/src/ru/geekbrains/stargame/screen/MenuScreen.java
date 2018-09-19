@@ -4,18 +4,21 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import ru.geekbrains.stargame.Background;
 import ru.geekbrains.stargame.base.Base2DScreen;
+import ru.geekbrains.stargame.base.Sprite;
+import ru.geekbrains.stargame.math.Rect;
 
 
 public class MenuScreen extends Base2DScreen {
 
-    SpriteBatch batch;
-    Texture img;
+    Background background;
+    Texture bg;
     Vector2 pos;
-    Vector2 v;
+
 
     public MenuScreen(Game game) {
         super(game);
@@ -24,10 +27,9 @@ public class MenuScreen extends Base2DScreen {
     @Override
     public void show() {
         super.show();
-        batch = new SpriteBatch();
-        img = new Texture("badlogic.jpg");
+        bg = new Texture("bg.png");
         pos = new Vector2(0f,0f);
-        v = new Vector2(2f,1f);
+        background = new Background(new TextureRegion(bg));
     }
 
 
@@ -37,21 +39,23 @@ public class MenuScreen extends Base2DScreen {
         Gdx.gl.glClearColor(1, 0.4f, 0.6f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        batch.draw(img, pos.x, pos.y);
+        background.draw(batch);
         batch.end();
-        pos.add(v);
+    }
+
+    @Override
+    protected void resize(Rect worldBounds) {
+        background.resize(worldBounds);
     }
 
     @Override
     public void dispose() {
-        batch.dispose();
-        img.dispose();
+        bg.dispose();
         super.dispose();
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("touchDown screenX = " + screenX + " screenY = "+ (Gdx.graphics.getHeight() - screenY));
-        return super.touchDown(screenX, screenY, pointer, button);
+    public boolean touchDown(Vector2 touch, int pointer) {
+        return super.touchDown(touch, pointer);
     }
 }
