@@ -56,6 +56,12 @@ public class MenuScreen extends Base2DScreen implements ActionListener {
         draw();
     }
 
+    public void update(float delta) {
+        for (int i = 0; i < star.length; i++) {
+            star[i].update(delta);
+        }
+    }
+
     public void draw() {
         Gdx.gl.glClearColor(1, 0.4f, 0.6f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -69,11 +75,6 @@ public class MenuScreen extends Base2DScreen implements ActionListener {
         batch.end();
     }
 
-    public void update(float delta) {
-        for (int i = 0; i < star.length; i++) {
-            star[i].update(delta);
-        }
-    }
 
     @Override
     protected void resize(Rect worldBounds) {

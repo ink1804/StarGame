@@ -33,6 +33,11 @@ public class GameScreen extends Base2DScreen {
         super.show();
         bg = new Texture("bg.png");
         background = new Background(new TextureRegion(bg));
+        atlas = new TextureAtlas("textures/mainAtlas.tpack");
+        star = new Star[STAR_COUNT];
+        for (int i = 0; i < star.length; i++) {
+            star[i] = new Star(atlas);
+        }
     }
 
     @Override
@@ -45,7 +50,9 @@ public class GameScreen extends Base2DScreen {
     }
 
     public void update(float delta) {
-
+        for (int i = 0; i < star.length; i++) {
+            star[i].update(delta);
+        }
     }
 
     public void checkCollisions() {
@@ -61,6 +68,9 @@ public class GameScreen extends Base2DScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         background.draw(batch);
+        for (int i = 0; i < star.length; i++) {
+            star[i].draw(batch);
+        }
         batch.end();
     }
 
@@ -68,6 +78,9 @@ public class GameScreen extends Base2DScreen {
     protected void resize(Rect worldBounds) {
         super.resize(worldBounds);
         background.resize(worldBounds);
+        for (int i = 0; i < star.length; i++) {
+            star[i].resize(worldBounds);
+        }
     }
 
     @Override
